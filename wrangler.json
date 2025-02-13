@@ -7,7 +7,7 @@
     "nodejs_compat"
   ],
   "vars": {
-    "APP_URL": "https://frameserver.pinatamarketing.cloud"
+    "APP_URL": "https://pinata-blog-frame.pages.dev"
   },
   "kv_namespaces": [
     {

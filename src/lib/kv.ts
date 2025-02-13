@@ -2,7 +2,7 @@ import { FrameNotificationDetails } from "@farcaster/frame-sdk";
 import { Context } from "hono";
 
 function getUserNotificationDetailsKey(fid: number): string {
-  return `frames-v2-demo:user:${fid}`;
+  return `pinata-blog-frame:user:${fid}`;
 }
 
 export async function getUserNotificationDetails(

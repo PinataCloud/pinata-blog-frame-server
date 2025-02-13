@@ -1,8 +1,8 @@
 import { Hono } from 'hono'
 import {
+  createVerifyAppKeyWithHub,
   ParseWebhookEvent,
   parseWebhookEvent,
-  verifyAppKeyWithNeynar,
 } from "@farcaster/frame-node";
 import {
   deleteUserNotificationDetails,
@@ -11,7 +11,8 @@ import {
 import { sendFrameNotification } from './lib/notifs'
 
 type Bindings = {
-  EVENT_STORE: KVNamespace
+  EVENT_STORE: KVNamespace;
+  NEYNAR_API_KEY: string;
 }
 
 const app = new Hono<{ Bindings: Bindings }>()
@@ -21,9 +22,16 @@ app.post('/webhook', async (c) => {
 
   let data;
   try {
-    data = await parseWebhookEvent(requestJson, verifyAppKeyWithNeynar);
+    const verifier = createVerifyAppKeyWithHub('https://hub-api.neynar.com', {
+      headers: {
+        'x-api-key': c.env.NEYNAR_API_KEY,
+      },
+    })
+    data = await parseWebhookEvent(requestJson, verifier);
+    console.log(data)
   } catch (e: unknown) {
     const error = e as ParseWebhookEvent.ErrorType;
+    console.log(error)
 
     switch (error.name) {
       case "VerifyJsonFarcasterSignature.InvalidDataError":
@@ -55,8 +63,8 @@ app.post('/webhook', async (c) => {
         await sendFrameNotification({
           c,
           fid,
-          title: "Welcome to Frames v2",
-          body: "Frame is now added to your client",
+          title: "Pinata Blog",
+          body: "You are now subscribed for notifications!",
         });
       } else {
         await deleteUserNotificationDetails(c, fid);
@@ -72,8 +80,8 @@ app.post('/webhook', async (c) => {
       await sendFrameNotification({
         c,
         fid,
-        title: "Ding ding ding",
-        body: "Notifications are now enabled",
+        title: "Pinata Blog",
+        body: "Notifications are now enabled!",
       });
       break;
 
