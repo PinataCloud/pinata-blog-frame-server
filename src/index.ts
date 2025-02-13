@@ -65,6 +65,7 @@ app.post('/webhook', async (c) => {
           fid,
           title: "Pinata Blog",
           body: "You are now subscribed for notifications!",
+          slug: "the-gdp-of-ipfs-measuring-the-economic-impact-of-decentralized-storage"
         });
       } else {
         await deleteUserNotificationDetails(c, fid);

@@ -19,15 +19,25 @@ export async function sendFrameNotification({
   fid,
   title,
   body,
+  slug
 }: {
   c: Context;
   fid: number;
   title: string;
   body: string;
+  slug?: string;
 }): Promise<SendFrameNotificationResult> {
   const notificationDetails = await getUserNotificationDetails(c, fid);
   if (!notificationDetails) {
     return { state: "no_token" };
+  }
+
+  let url: string
+
+  if (slug) {
+    url = `${c.env.APP_URL}?post=${slug}`
+  } else {
+    url = c.env.APP_URL
   }
 
   const response = await fetch(notificationDetails.url, {
@@ -39,7 +49,7 @@ export async function sendFrameNotification({
       notificationId: crypto.randomUUID(),
       title,
       body,
-      targetUrl: c.env.APP_URL,
+      targetUrl: url,
       tokens: [notificationDetails.token],
     } satisfies SendNotificationRequest),
   });
