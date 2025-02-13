@@ -1,0 +1,16 @@
+{
+  "name": "pinata-blog-frame-notifications-server",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy --minify"
+  },
+  "dependencies": {
+    "@farcaster/frame-node": "^0.0.13",
+    "@farcaster/frame-sdk": "^0.0.26",
+    "hono": "^4.6.20"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20250109.0",
+    "wrangler": "^3.101.0"
+  }
+}

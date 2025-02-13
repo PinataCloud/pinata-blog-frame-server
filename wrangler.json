@@ -1,0 +1,18 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "pinata-blog-frame-notifications-server",
+  "main": "src/index.ts",
+  "compatibility_date": "2025-02-13",
+  "compatibility_flags": [
+    "nodejs_compat"
+  ],
+  "vars": {
+    "APP_URL": "https://frameserver.pinatamarketing.cloud"
+  },
+  "kv_namespaces": [
+    {
+      "binding": "EVENT_STORE",
+      "id": "bb57f09c252c4c08ace10d4c8bb05213"
+    }
+  ]
+}
